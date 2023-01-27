@@ -14,16 +14,43 @@
     },
     {
       "id": 3,
-      "name": "Морской герой",
-      "description": "Как аквамен, но не из DC",
-      "element": "Вода"
+      "name": "Антон",
+      "description": "Прокрастинация",
+      "element": "Земля"
+    },
+    {
+      "name": "proverka",
+      "description": "dhdf",
+      "element": "Вода",
+      "id": 4
+    },
+    {
+      "id": 5,
+      "name": "Кларк",
+      "description": "Все",
+      "element": "Огонь"
     }
   ],
   "filters": [
-    "Все",
-    "Огонь",
-    "Вода",
-    "Воздух",
-    "Земля"
+    {
+      "name": "Все",
+      "class": "btn-outline-dark"
+    },
+    {
+      "name": "Огонь",
+      "class": "btn-danger"
+    },
+    {
+      "name": "Вода",
+      "class": "btn-primary"
+    },
+    {
+      "name": "Воздух",
+      "class": "btn-success"
+    },
+    {
+      "name": "Земля",
+      "class": "btn-secondary"
+    }
   ]
 }

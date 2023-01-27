@@ -1,11 +1,3 @@
-
-// Задача для этого компонента:
-//!! Фильтры должны формироваться на основании загруженных данных
-//!! Фильтры должны отображать только нужных героев при выборе
-//!! Активный фильтр имеет класс active
-//!! Изменять json-файл для удобства МОЖНО!
-//!! Представьте, что вы попросили бэкенд-разработчика об этом
-
 import {
   changeFilter,
   heroesFetchingError,
@@ -16,35 +8,9 @@ import {useHttp} from "../../hooks/http.hook";
 import {useEffect} from "react";
 
 const HeroesFilters = () => {
-    const {filters, activeFilter} = useSelector(state => state);
+    const {filters, activeFilter} = useSelector(state => state.filters);
     const dispatch = useDispatch()
     const {request} = useHttp();
-
-  const colorBtn = (color)=>{
-    let elementClassName;
-    switch (color) {
-      case 'Все':
-        elementClassName = 'btn-outline-dark';
-        break;
-      case 'Огонь':
-        elementClassName = 'btn-danger';
-        break;
-      case 'Вода':
-        elementClassName = 'btn-primary';
-        break;
-      case 'Воздух':
-        elementClassName = 'btn-success';
-        break;
-      case 'Земля':
-        elementClassName = 'btn-secondary';
-        break;
-      default:
-        elementClassName = 'btn';
-    }
-    return elementClassName
-  }
-
-const activeBtn = (f)=> activeFilter === f ? 'active' : colorBtn(f);
 
     useEffect(() => {
             request("http://localhost:3001/filters")
@@ -58,10 +24,14 @@ const activeBtn = (f)=> activeFilter === f ? 'active' : colorBtn(f);
             <div className="card-body">
                 <p className="card-text">Отфильтруйте героев по элементам</p>
                  <div className="btn-group">
-                    {filters.length === 0 ? "" : filters.map((f,i) => <button
-                      key={f}
-                      onClick={()=> dispatch(changeFilter(f))}
-                      className={`btn ${activeBtn(f)} `}>{f}</button>)}
+                    {filters.length === 0 ? "" : filters.map(f => <button
+                      key={f.name}
+                      onClick={()=> dispatch(changeFilter(f.name))}
+                      className={`btn 
+                      ${activeFilter === f.name ? 'active' : ''} 
+                      ${f.class} `}>
+                      {f.name}
+                    </button>)}
                 </div>
             </div>
         </div>

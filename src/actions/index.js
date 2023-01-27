@@ -37,3 +37,10 @@ export const changeFilter = (filter) => {
         payload: filter
     }
 }
+
+export const addHero = (hero) => {
+    return{
+        type: "ADD_HERO",
+        payload: hero
+    }
+}

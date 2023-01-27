@@ -1,17 +1,23 @@
 import {useHttp} from '../../hooks/http.hook';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import {createSelector} from "reselect";
 import {heroesFetching, heroesFetched, heroesFetchingError, deleteHeroes} from '../../actions';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
 
 const HeroesList = () => {
-    const {heroes, heroesLoadingStatus, activeFilter} = useSelector(state => state);
+    const FiltersHeroeseSelector = createSelector(
+      (state)=> state.filters.activeFilter,
+      (state)=> state.heroes.heroes,
+      (activeFilter, heroes) => ({activeFilter, heroes})
+    )
+    const {heroes, activeFilter} = useSelector(FiltersHeroeseSelector);
+    const heroesLoadingStatus = useSelector(state => state.heroes.heroesLoadingStatus);
     const dispatch = useDispatch();
     const {request} = useHttp();
-
+    console.log(heroes, activeFilter)
     useEffect(() => {
         request("http://localhost:3001/heroes")
           .then(data => dispatch(heroesFetched(data)))
@@ -39,9 +45,12 @@ const HeroesList = () => {
         }else if (activeFilter === 'Все'){
             return arr.map(({id, ...props})=><HeroesListItem key={id} {...props} del={()=> deleteHero(id)}/>)
         } else {
-            return arr.filter(h => h.element === activeFilter).map(({id, ...props}) => <HeroesListItem key={id} {...props} del={()=> deleteHero(id)}/>)
+            const filterHero =  arr.filter(h => h.element === activeFilter)
+            return filterHero.length ?
+              filterHero.map(({id, ...props}) => <HeroesListItem key={id} {...props} del={()=> deleteHero(id)}/>)
+              :
+              <h5 className="text-center mt-5">Героев c таким элементом нет</h5>
         }
-            return <h5 className="text-center mt-5">Героев c таким элементом нет</h5>
     }
 
     const elements = renderHeroesList(heroes);
