@@ -1,5 +1,5 @@
 import {
-  changeFilter,
+  changeFilter, fetchFilters,
   heroesFetchingError,
   heroesFilters
 } from "../../actions";
@@ -13,10 +13,7 @@ const HeroesFilters = () => {
     const {request} = useHttp();
 
     useEffect(() => {
-            request("http://localhost:3001/filters")
-              .then(data => dispatch(heroesFilters(data)))
-              .catch(() => dispatch(heroesFetchingError()))
-
+      dispatch( fetchFilters(request))
     }, []);
 
     return (

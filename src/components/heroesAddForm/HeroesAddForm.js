@@ -16,7 +16,8 @@ import {addHero, heroesFetched, heroesFetchingError} from "../../actions";
 import {useHttp} from "../../hooks/http.hook";
 
 const HeroesAddForm = () => {
-  const {filters, heroes} = useSelector(state => state.filters);
+  const {filters} = useSelector(state => state.filters);
+  const {heroes} = useSelector(state => state.heroes);
   const dispatch = useDispatch()
   const {request} = useHttp();
   const [heroesForm, setHeroesForm] = useState({
@@ -25,7 +26,7 @@ const HeroesAddForm = () => {
     description: '',
     element: '',
   });
-
+console.log(heroesForm)
   const AddHero = (e, heroesForm) => {
     e.preventDefault()
     setHeroesForm({
